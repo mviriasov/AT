@@ -6,7 +6,10 @@ public class newtest {
 
     @Test
     void test() {
+
+        int i = 3;
         System.out.print("the best");
-       Assertions.ossertTrue(3>2);
+       Assertions.ossertTrue(i>2);
+
     }
 }
