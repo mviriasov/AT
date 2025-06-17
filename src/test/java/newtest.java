@@ -6,7 +6,7 @@ public class newtest {
 
     @Test
     void test() {
-
-       Assertions.ossertTrue(3>2);
+        int i = 3;
+       Assertions.ossertTrue(i>2);
     }
 }
