@@ -7,7 +7,7 @@ public class newtest {
     @Test
     void test() {
 
-        int i = 42 + 42;
+        int i = 42;
         System.out.print("the best");
        Assertions.ossertTrue(i>2);
 
