@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
@@ -5,9 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Demoqaform {
 
@@ -22,31 +23,37 @@ public class Demoqaform {
 
     @Test
     void DemoForm() {
-
+        String userName = "Max";
+        String lastName = "Bochkin";
+        String userEmail = "parararapa@mail.ru";
+        String userNumber = "7927388223";
+        String currentAdress = "Bobrovskaya";
 
         //Открытие формы
         Selenide.open("https://demoqa.com/automation-practice-form");
 
         //Заполнение полей формы
-        $("#firstName").setValue("Max");
-        $("#lastName").setValue("Bochkin");
-        $("#userEmail").setValue("parararapa@mail.ru");
+        $("#firstName").setValue(userName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(userEmail);
         //Выбор гендера
         // с помощью Радиобаттон$(".custom-control-input").selectRadio("Male");
         $(byText("Male")).click();
-        $("#userNumber").setValue("7927388223");
+        $("#userNumber").setValue(userNumber);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("1999");
         $(".react-datepicker__month-select").selectOption("February");
         $(".react-datepicker__day--016").click();
 
-        /*
-        Выбор предметов
-        Не смог понять, почему ебаный setValue не работает.
+
+        //Выбор предметов
+        //Тут не понимаю почему тоже самое в одну строку не работало?
         $("#subjectsContainer").click();
-        $(".subjects-auto-complete__control--menu-is-open").setValue("E").$(byText("English")).click();
-        $("#subjectsContainer").setValue("Mat").$(byText("Maths")).click();
-        */
+        $("#subjectsInput").setValue("E");
+        $(byText("English")).click();
+        $("#subjectsInput").setValue("Mat");
+        $(byText("Maths")).click();
+
 
         $(byText("Sports")).click();
 
@@ -54,7 +61,7 @@ public class Demoqaform {
         File file = new File("src/test/java/test_file");
         $("#uploadPicture").uploadFile(file);
 
-        $("#currentAddress").setValue("Bobrovskaya");
+        $("#currentAddress").setValue(currentAdress);
         //Это выглядит как какая-то шляпа? или так делают?
         $(byText("Select State")).click();
         $("#react-select-3-option-1").click();
@@ -62,10 +69,21 @@ public class Demoqaform {
         $(byText("Select City")).click();
         $("#react-select-4-option-2").click();
 
+        $("#submit").click();
+        $(".modal-title").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(text(userName));
+        $(".table-responsive").shouldHave(text(lastName));
+        $(".table-responsive").shouldHave(text(userEmail));
+        $(".table-responsive").shouldHave(text("Male"));
+        $(".table-responsive").shouldHave(text(userNumber));
+        $(".table-responsive").shouldHave(text("16 February,1999"));
+        $(".table-responsive").shouldHave(text("English, Maths"));
+        $(".table-responsive").shouldHave(text("Sports"));
+        $(".table-responsive").shouldHave(text("test_file"));
+        $(".table-responsive").shouldHave(text(currentAdress));
+        $(".table-responsive").shouldHave(text("Uttar Pradesh Merrut"));
 
-        //$("#submit").click();
 
-
-        sleep(5000);
+        sleep(7000);
     }
 }
