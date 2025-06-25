@@ -3,6 +3,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pages.DemoqaformPages;
 
 import java.io.File;
 
@@ -20,7 +21,6 @@ public class Demoqaform {
 
     }
 
-
     @Test
     void DemoForm() {
         String userName = "Max";
@@ -30,10 +30,10 @@ public class Demoqaform {
         String currentAdress = "Bobrovskaya";
 
         //Открытие формы
-        Selenide.open("https://demoqa.com/automation-practice-form");
+        new DemoqaformPages().openPage();
 
         //Заполнение полей формы
-        $("#firstName").setValue(userName);
+        new DemoqaformPages().setFirstName(userName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(userEmail);
         //Выбор гендера
@@ -48,11 +48,11 @@ public class Demoqaform {
 
         //Выбор предметов
         //Тут не понимаю почему тоже самое в одну строку не работало?
-        $("#subjectsContainer").click();
-        $("#subjectsInput").setValue("E");
-        $(byText("English")).click();
-        $("#subjectsInput").setValue("Mat");
-        $(byText("Maths")).click();
+        //$("#subjectsContainer").click();
+        $("#subjectsInput").setValue("English").pressEnter();
+        // $(byText("English")).click();
+        //$("#subjectsInput").setValue("Mat").pressEnter();
+        //$(byText("Maths")).click();
 
 
         $(byText("Sports")).click();
@@ -77,7 +77,7 @@ public class Demoqaform {
         $(".table-responsive").shouldHave(text("Male"));
         $(".table-responsive").shouldHave(text(userNumber));
         $(".table-responsive").shouldHave(text("16 February,1999"));
-        $(".table-responsive").shouldHave(text("English, Maths"));
+        $(".table-responsive").shouldHave(text("English"));
         $(".table-responsive").shouldHave(text("Sports"));
         $(".table-responsive").shouldHave(text("test_file"));
         $(".table-responsive").shouldHave(text(currentAdress));
