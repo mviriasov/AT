@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -31,10 +32,7 @@ public class Demoqaform extends TestBase {
 
         //Заполнение полей: номер телефона и дата рождения
         demoformqaPages.setNumber(userNumber);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("1999");
-        $(".react-datepicker__month-select").selectOption("February");
-        $(".react-datepicker__day--016").click();
+        demoformqaPages.setBirthDate("16", "February", "1999");
 
 
         //Выбор предметов
@@ -54,15 +52,16 @@ public class Demoqaform extends TestBase {
 
         $(byText("Select City")).click();
         $("#react-select-4-option-2").click();
-
         $("#submit").click();
-        $(".modal-title").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text(userName));
-        $(".table-responsive").shouldHave(text(lastName));
-        $(".table-responsive").shouldHave(text(userEmail));
-        $(".table-responsive").shouldHave(text("Other"));
-        $(".table-responsive").shouldHave(text(userNumber));
-        $(".table-responsive").shouldHave(text("16 February,1999"));
+
+        demoformqaPages.verifyResultsModalAppears();
+        demoformqaPages.verifyResults("Student Name", userName + " " + lastName);
+        demoformqaPages.verifyResults("Student Email", userEmail);
+        demoformqaPages.verifyResults("Gender", "Other");
+        demoformqaPages.verifyResults("Mobile", userNumber);
+        demoformqaPages.verifyResults("Date of Birth", "16 February,1999");
+
+
         $(".table-responsive").shouldHave(text("English"));
         $(".table-responsive").shouldHave(text("Sports"));
         $(".table-responsive").shouldHave(text("test_file"));
