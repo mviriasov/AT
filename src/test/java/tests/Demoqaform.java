@@ -1,9 +1,6 @@
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.BeforeAll;
+package tests;
+
 import org.junit.jupiter.api.Test;
-import pages.DemoqaformPages;
 
 import java.io.File;
 
@@ -11,15 +8,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Demoqaform {
-
-    @BeforeAll
-    static void beforeAll(){
-
-        Configuration.pageLoadTimeout = 60000;
-        Configuration.browserSize = "1920x1080";
-
-    }
+public class Demoqaform extends TestBase {
 
     @Test
     void DemoForm() {
@@ -30,16 +19,18 @@ public class Demoqaform {
         String currentAdress = "Bobrovskaya";
 
         //Открытие формы
-        new DemoqaformPages().openPage();
+        demoformqaPages.openPage();
 
         //Заполнение полей формы
-        new DemoqaformPages().setFirstName(userName);
-        $("#lastName").setValue(lastName);
-        $("#userEmail").setValue(userEmail);
+        demoformqaPages.setFirstName(userName);
+        demoformqaPages.setLastName(lastName);
+        demoformqaPages.setEmail(userEmail);
+
         //Выбор гендера
-        // с помощью Радиобаттон$(".custom-control-input").selectRadio("Male");
-        $(byText("Male")).click();
-        $("#userNumber").setValue(userNumber);
+        demoformqaPages.setGender("Other");
+
+        //Заполнение полей: номер телефона и дата рождения
+        demoformqaPages.setNumber(userNumber);
         $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("1999");
         $(".react-datepicker__month-select").selectOption("February");
@@ -47,18 +38,13 @@ public class Demoqaform {
 
 
         //Выбор предметов
-        //Тут не понимаю почему тоже самое в одну строку не работало?
-        //$("#subjectsContainer").click();
         $("#subjectsInput").setValue("English").pressEnter();
-        // $(byText("English")).click();
         //$("#subjectsInput").setValue("Mat").pressEnter();
-        //$(byText("Maths")).click();
-
 
         $(byText("Sports")).click();
 
         //Загрузка файла
-        File file = new File("src/test/java/test_file");
+        File file = new File("src/test/java/tests/test_file");
         $("#uploadPicture").uploadFile(file);
 
         $("#currentAddress").setValue(currentAdress);
@@ -74,7 +60,7 @@ public class Demoqaform {
         $(".table-responsive").shouldHave(text(userName));
         $(".table-responsive").shouldHave(text(lastName));
         $(".table-responsive").shouldHave(text(userEmail));
-        $(".table-responsive").shouldHave(text("Male"));
+        $(".table-responsive").shouldHave(text("Other"));
         $(".table-responsive").shouldHave(text(userNumber));
         $(".table-responsive").shouldHave(text("16 February,1999"));
         $(".table-responsive").shouldHave(text("English"));
