@@ -60,13 +60,11 @@ public class Demoqaform extends TestBase {
         demoformqaPages.verifyResults("Gender", "Other");
         demoformqaPages.verifyResults("Mobile", userNumber);
         demoformqaPages.verifyResults("Date of Birth", "16 February,1999");
-
-
-        $(".table-responsive").shouldHave(text("English"));
-        $(".table-responsive").shouldHave(text("Sports"));
-        $(".table-responsive").shouldHave(text("test_file"));
-        $(".table-responsive").shouldHave(text(currentAdress));
-        $(".table-responsive").shouldHave(text("Uttar Pradesh Merrut"));
+        demoformqaPages.verifyResults("Subjects", "English");
+        demoformqaPages.verifyResults("Hobbies", "Sports");
+        demoformqaPages.verifyResults("Picture", "test_file");
+        demoformqaPages.verifyResults("Address", currentAdress);
+        demoformqaPages.verifyResults("State and City", "Uttar Pradesh Merrut");
 
 
         sleep(7000);
