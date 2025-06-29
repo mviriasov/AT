@@ -1,12 +1,7 @@
 package tests;
-
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Demoqaform extends TestBase {
@@ -18,6 +13,7 @@ public class Demoqaform extends TestBase {
         String userEmail = "parararapa@mail.ru";
         String userNumber = "7927388223";
         String currentAdress = "Bobrovskaya";
+        SelenideElement submitButton = $("#submit");
 
         //Открытие формы
         demoformqaPages.openPage();
@@ -34,25 +30,21 @@ public class Demoqaform extends TestBase {
         demoformqaPages.setNumber(userNumber);
         demoformqaPages.setBirthDate("16", "February", "1999");
 
+        //Выбор предмета
+        demoformqaPages.setSubject("English");
 
-        //Выбор предметов
-        $("#subjectsInput").setValue("English").pressEnter();
-        //$("#subjectsInput").setValue("Mat").pressEnter();
-
-        $(byText("Sports")).click();
+        //Выбор хобби
+        demoformqaPages.setHobbies();
 
         //Загрузка файла
-        File file = new File("src/test/java/tests/test_file");
-        $("#uploadPicture").uploadFile(file);
+        demoformqaPages.uploadFile();
 
-        $("#currentAddress").setValue(currentAdress);
-        //Это выглядит как какая-то шляпа? или так делают?
-        $(byText("Select State")).click();
-        $("#react-select-3-option-1").click();
+        //Адрес
+        demoformqaPages.setAdress(currentAdress);
 
-        $(byText("Select City")).click();
-        $("#react-select-4-option-2").click();
-        $("#submit").click();
+        //Выбор Штата и города
+        demoformqaPages.setCityAndState();
+        submitButton.click();
 
         demoformqaPages.verifyResultsModalAppears();
         demoformqaPages.verifyResults("Student Name", userName + " " + lastName);
@@ -65,7 +57,6 @@ public class Demoqaform extends TestBase {
         demoformqaPages.verifyResults("Picture", "test_file");
         demoformqaPages.verifyResults("Address", currentAdress);
         demoformqaPages.verifyResults("State and City", "Uttar Pradesh Merrut");
-
 
         sleep(7000);
     }

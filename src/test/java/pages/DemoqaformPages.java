@@ -5,6 +5,8 @@ import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 import pages.components.DemoformResultsModal;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -13,6 +15,7 @@ public class DemoqaformPages {
 
 DemoformResultsModal demoformResultsModal = new DemoformResultsModal();
 CalendarComponent calendarComponent = new CalendarComponent();
+File file = new File("src/test/java/tests/test_file");
 
 private final String TITTLE_TEXT = "Student Registration Form";
 private final SelenideElement
@@ -21,7 +24,15 @@ private final SelenideElement
         EmailInput = $("#userEmail"),
         GenderButton = $("#genterWrapper"),
         SetNumberInput = $("#userNumber"),
-        DateOfBirthInput = $("#dateOfBirthInput");
+        DateOfBirthInput = $("#dateOfBirthInput"),
+        SetSubjectInput = $("#subjectsInput"),
+        SetHobbiesInput = $(byText("Sports")),
+        UploadFileButton = $("#uploadPicture"),
+        SetAdressInput = $("#currentAddress"),
+        StateCl = $("#state"),
+        CityCl = $("#city"),
+        SetState = $("#stateCity-wrapper").$(byText("Uttar Pradesh")),
+        SetCity = $("#stateCity-wrapper").$(byText("Merrut"));
 
 public void openPage() {
 
@@ -62,9 +73,27 @@ public void verifyResults(String key, String value) {
     demoformResultsModal.verifyResults(key, value);
 }
 
+public void setSubject (String value) {
+        SetSubjectInput.setValue(value).pressEnter();
+    }
 
+public void setHobbies () {
+        SetHobbiesInput.click();
+    }
 
+public void uploadFile () {
+        UploadFileButton.uploadFile(file);
+    }
 
+public void setAdress (String value) {
+        SetAdressInput.setValue(value);
+    }
 
+public void setCityAndState () {
+    StateCl.click();
+    SetState.click();
+    CityCl.click();
+    SetCity.click();
+    }
 
 }
