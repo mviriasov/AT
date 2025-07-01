@@ -43,7 +43,8 @@ public class Demoqaform extends TestBase {
         demoformqaPages.setAdress(currentAdress);
 
         //Выбор Штата и города
-        demoformqaPages.setCityAndState();
+        demoformqaPages.setState("Uttar Pradesh");
+        demoformqaPages.setCity("Merrut");
         submitButton.click();
 
         demoformqaPages.verifyResultsModalAppears();
