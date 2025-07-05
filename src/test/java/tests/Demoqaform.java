@@ -1,10 +1,12 @@
 package tests;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
+import pages.DemoqaformPages;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class Demoqaform extends TestBase {
+
 
     @Test
     void DemoForm() {
