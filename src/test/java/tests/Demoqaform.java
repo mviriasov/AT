@@ -10,12 +10,6 @@ public class Demoqaform extends TestBase {
 
     @Test
     void DemoForm() {
-        String userName = "Max";
-        String lastName = "Bochkin";
-        String userEmail = "parararapa@mail.ru";
-        String userNumber = "7927388223";
-        String currentAdress = "Bobrovskaya";
-        SelenideElement submitButton = $("#submit");
 
         //Открытие формы
         demoformqaPages.openPage();
